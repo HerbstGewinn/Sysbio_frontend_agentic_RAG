@@ -9,6 +9,38 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      uploaded_studies: {
+        Row: {
+          file_path: string
+          filename: string
+          id: string
+          Study_identifier: string | null
+          uploaded_at: string
+        }
+        Insert: {
+          file_path: string
+          filename: string
+          id?: string
+          Study_identifier?: string | null
+          uploaded_at?: string
+        }
+        Update: {
+          file_path?: string
+          filename?: string
+          id?: string
+          Study_identifier?: string | null
+          uploaded_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "uploaded_studies_Study_identifier_fkey"
+            columns: ["Study_identifier"]
+            isOneToOne: false
+            referencedRelation: "validation_data"
+            referencedColumns: ["Study_identifier"]
+          },
+        ]
+      }
       validation_data: {
         Row: {
           disease: string | null
