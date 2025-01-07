@@ -9,6 +9,264 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      h2s: {
+        Row: {
+          id: number
+          study_id: number
+          type_id: number
+        }
+        Insert: {
+          id?: number
+          study_id: number
+          type_id: number
+        }
+        Update: {
+          id?: number
+          study_id?: number
+          type_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fk_h2s_study"
+            columns: ["study_id"]
+            isOneToOne: false
+            referencedRelation: "studies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "fk_h2s_type"
+            columns: ["type_id"]
+            isOneToOne: false
+            referencedRelation: "types"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      orphanet_disease: {
+        Row: {
+          orpha_code: string | null
+          orpha_term: string | null
+        }
+        Insert: {
+          orpha_code?: string | null
+          orpha_term?: string | null
+        }
+        Update: {
+          orpha_code?: string | null
+          orpha_term?: string | null
+        }
+        Relationships: []
+      }
+      s2s: {
+        Row: {
+          source_id: number
+          study_id: number
+        }
+        Insert: {
+          source_id: number
+          study_id: number
+        }
+        Update: {
+          source_id?: number
+          study_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fk_s2s_source"
+            columns: ["source_id"]
+            isOneToOne: false
+            referencedRelation: "sources"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "fk_s2s_study"
+            columns: ["study_id"]
+            isOneToOne: false
+            referencedRelation: "studies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      sources: {
+        Row: {
+          acronym: string | null
+          description: string | null
+          id: number
+          name: string | null
+          status: number | null
+        }
+        Insert: {
+          acronym?: string | null
+          description?: string | null
+          id?: number
+          name?: string | null
+          status?: number | null
+        }
+        Update: {
+          acronym?: string | null
+          description?: string | null
+          id?: number
+          name?: string | null
+          status?: number | null
+        }
+        Relationships: []
+      }
+      studies: {
+        Row: {
+          ci_desc: string | null
+          ci_grade: string | null
+          ci_n: number | null
+          ci_ocelm: number | null
+          ci_omim_code: string | null
+          ci_omim_term: string | null
+          ci_ordo_code: string | null
+          ci_ordo_term: string | null
+          ci_type: string | null
+          grm_37_end: number | null
+          grm_37_pos: number | null
+          grm_37_start: number | null
+          grm_38_end: number | null
+          grm_38_pos: number | null
+          grm_38_start: number | null
+          grm_cdna: string | null
+          grm_chrm: string | null
+          grm_ensemble_gene_id: string | null
+          grm_ensemble_transcript_id: string | null
+          grm_entrez_gene_id: string | null
+          grm_hgnc_symbol: string | null
+          grm_inheritance_code: string | null
+          grm_inheritance_term: string | null
+          grm_protein: string | null
+          grm_reference: string | null
+          grm_rnda_tag: string | null
+          grm_transcript: string | null
+          grm_var_type: string | null
+          id: number
+          pub_authors: string | null
+          pub_code: string | null
+          pub_db: string | null
+          pub_doi: string | null
+          pub_journal: string | null
+          pub_title: string | null
+          pub_year: number | null
+          trt_bio_eff: string | null
+          trt_cl_eff: string | null
+          trt_code: string | null
+          trt_comments: string | null
+          trt_db: string | null
+          trt_negative: string | null
+          trt_term: string | null
+        }
+        Insert: {
+          ci_desc?: string | null
+          ci_grade?: string | null
+          ci_n?: number | null
+          ci_ocelm?: number | null
+          ci_omim_code?: string | null
+          ci_omim_term?: string | null
+          ci_ordo_code?: string | null
+          ci_ordo_term?: string | null
+          ci_type?: string | null
+          grm_37_end?: number | null
+          grm_37_pos?: number | null
+          grm_37_start?: number | null
+          grm_38_end?: number | null
+          grm_38_pos?: number | null
+          grm_38_start?: number | null
+          grm_cdna?: string | null
+          grm_chrm?: string | null
+          grm_ensemble_gene_id?: string | null
+          grm_ensemble_transcript_id?: string | null
+          grm_entrez_gene_id?: string | null
+          grm_hgnc_symbol?: string | null
+          grm_inheritance_code?: string | null
+          grm_inheritance_term?: string | null
+          grm_protein?: string | null
+          grm_reference?: string | null
+          grm_rnda_tag?: string | null
+          grm_transcript?: string | null
+          grm_var_type?: string | null
+          id?: number
+          pub_authors?: string | null
+          pub_code?: string | null
+          pub_db?: string | null
+          pub_doi?: string | null
+          pub_journal?: string | null
+          pub_title?: string | null
+          pub_year?: number | null
+          trt_bio_eff?: string | null
+          trt_cl_eff?: string | null
+          trt_code?: string | null
+          trt_comments?: string | null
+          trt_db?: string | null
+          trt_negative?: string | null
+          trt_term?: string | null
+        }
+        Update: {
+          ci_desc?: string | null
+          ci_grade?: string | null
+          ci_n?: number | null
+          ci_ocelm?: number | null
+          ci_omim_code?: string | null
+          ci_omim_term?: string | null
+          ci_ordo_code?: string | null
+          ci_ordo_term?: string | null
+          ci_type?: string | null
+          grm_37_end?: number | null
+          grm_37_pos?: number | null
+          grm_37_start?: number | null
+          grm_38_end?: number | null
+          grm_38_pos?: number | null
+          grm_38_start?: number | null
+          grm_cdna?: string | null
+          grm_chrm?: string | null
+          grm_ensemble_gene_id?: string | null
+          grm_ensemble_transcript_id?: string | null
+          grm_entrez_gene_id?: string | null
+          grm_hgnc_symbol?: string | null
+          grm_inheritance_code?: string | null
+          grm_inheritance_term?: string | null
+          grm_protein?: string | null
+          grm_reference?: string | null
+          grm_rnda_tag?: string | null
+          grm_transcript?: string | null
+          grm_var_type?: string | null
+          id?: number
+          pub_authors?: string | null
+          pub_code?: string | null
+          pub_db?: string | null
+          pub_doi?: string | null
+          pub_journal?: string | null
+          pub_title?: string | null
+          pub_year?: number | null
+          trt_bio_eff?: string | null
+          trt_cl_eff?: string | null
+          trt_code?: string | null
+          trt_comments?: string | null
+          trt_db?: string | null
+          trt_negative?: string | null
+          trt_term?: string | null
+        }
+        Relationships: []
+      }
+      types: {
+        Row: {
+          code: string | null
+          id: number
+          term: string | null
+        }
+        Insert: {
+          code?: string | null
+          id?: number
+          term?: string | null
+        }
+        Update: {
+          code?: string | null
+          id?: number
+          term?: string | null
+        }
+        Relationships: []
+      }
       uploaded_studies: {
         Row: {
           file_path: string
