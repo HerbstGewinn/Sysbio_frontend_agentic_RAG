@@ -33,10 +33,19 @@ const Index = () => {
 
       setUploading(true);
       
+      // Sanitize filename
+      const fileExt = file.name.split('.').pop();
+      const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+      const sanitizedFilename = `${timestamp}-${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
+      const filePath = `studies/${sanitizedFilename}`;
+
       // Upload file to storage
       const { data: fileData, error: uploadError } = await supabase.storage
         .from('clinical_studies')
-        .upload(`studies/${file.name}`, file);
+        .upload(filePath, file, {
+          cacheControl: '3600',
+          upsert: false
+        });
 
       if (uploadError) throw uploadError;
 
@@ -45,7 +54,7 @@ const Index = () => {
         .from('uploaded_studies')
         .insert({
           filename: file.name,
-          file_path: fileData.path
+          file_path: filePath
         });
 
       if (dbError) throw dbError;
@@ -58,7 +67,7 @@ const Index = () => {
       console.error('Upload error:', error);
       toast({
         title: "Error",
-        description: "Failed to upload file",
+        description: "Failed to upload file. Please try again.",
         variant: "destructive",
       });
     } finally {
