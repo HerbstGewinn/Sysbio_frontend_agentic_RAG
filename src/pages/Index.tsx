@@ -112,7 +112,7 @@ const Index = () => {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Database className="h-5 w-5" />
-              Validation Data Stats
+              Extracted Data Stats
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -127,7 +127,7 @@ const Index = () => {
       {/* Data Table */}
       <Card>
         <CardHeader>
-          <CardTitle>Validation Data</CardTitle>
+          <CardTitle>Extracted Data</CardTitle>
         </CardHeader>
         <CardContent>
           <ScrollArea className="h-[400px] rounded-md border">
