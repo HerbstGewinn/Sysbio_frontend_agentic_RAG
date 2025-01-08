@@ -2,22 +2,24 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
-import { Upload, Database } from "lucide-react";
+import { Upload, Database, Sun, Moon } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useToast } from "@/components/ui/use-toast";
+import { useTheme } from "next-themes";
 
 const Index = () => {
   const { toast } = useToast();
   const [uploading, setUploading] = useState(false);
+  const { theme, setTheme } = useTheme();
 
-  // Fetch validation data
-  const { data: validationData, isLoading } = useQuery({
-    queryKey: ['validation-data'],
+  // Fetch analysis results data
+  const { data: analysisData, isLoading } = useQuery({
+    queryKey: ['analysis-results'],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from('validation_data')
+        .from('analysis_results')
         .select('*');
       
       if (error) throw error;
@@ -77,6 +79,18 @@ const Index = () => {
 
   return (
     <div className="container mx-auto p-6 space-y-6">
+      {/* Dark Mode Toggle */}
+      <div className="flex justify-end mb-4">
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+          className="rounded-full"
+        >
+          {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+        </Button>
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Upload Card */}
         <Card>
@@ -112,22 +126,22 @@ const Index = () => {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Database className="h-5 w-5" />
-              Extracted Data Stats
+              Analysis Results Stats
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {isLoading ? "Loading..." : validationData?.length || 0}
+              {isLoading ? "Loading..." : analysisData?.length || 0}
             </div>
             <p className="text-muted-foreground">Total Records</p>
           </CardContent>
         </Card>
       </div>
 
-      {/* Data Table */}
+      {/* Analysis Results Table */}
       <Card>
         <CardHeader>
-          <CardTitle>Extracted Data</CardTitle>
+          <CardTitle>Analysis Results</CardTitle>
         </CardHeader>
         <CardContent>
           <ScrollArea className="h-[400px] rounded-md border">
@@ -135,26 +149,30 @@ const Index = () => {
               <TableHeader>
                 <TableRow>
                   <TableHead>Study Identifier</TableHead>
+                  <TableHead>Publication Database</TableHead>
+                  <TableHead>DOI</TableHead>
+                  <TableHead>Year</TableHead>
                   <TableHead>Disease</TableHead>
                   <TableHead>Treatment</TableHead>
                   <TableHead>Gene</TableHead>
-                  <TableHead>ORDO Code</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {isLoading ? (
                   <TableRow>
-                    <TableCell colSpan={5} className="text-center">
+                    <TableCell colSpan={7} className="text-center">
                       Loading...
                     </TableCell>
                   </TableRow>
-                ) : validationData?.map((row) => (
-                  <TableRow key={row.Study_identifier}>
-                    <TableCell>{row.Study_identifier}</TableCell>
-                    <TableCell>{row.disease}</TableCell>
-                    <TableCell>{row.treatment}</TableCell>
-                    <TableCell>{row.gene}</TableCell>
-                    <TableCell>{row.ORDO_code}</TableCell>
+                ) : analysisData?.map((row) => (
+                  <TableRow key={row.id}>
+                    <TableCell>{row.study_identifier}</TableCell>
+                    <TableCell>{row.puplication_database}</TableCell>
+                    <TableCell>{row.doi}</TableCell>
+                    <TableCell>{row.year_of_publication}</TableCell>
+                    <TableCell>{JSON.stringify(row.disease)}</TableCell>
+                    <TableCell>{JSON.stringify(row.treatment)}</TableCell>
+                    <TableCell>{JSON.stringify(row.gene)}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

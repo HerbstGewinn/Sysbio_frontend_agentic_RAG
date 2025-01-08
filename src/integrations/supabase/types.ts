@@ -9,6 +9,54 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      analysis_results: {
+        Row: {
+          authors: string | null
+          created_at: string | null
+          disease: Json | null
+          doi: string | null
+          gene: Json | null
+          id: number
+          ordo_code: Json | null
+          puplication_database: string | null
+          study_identifier: string | null
+          study_title: string | null
+          treatment: Json | null
+          treatment_id: Json | null
+          year_of_publication: number | null
+        }
+        Insert: {
+          authors?: string | null
+          created_at?: string | null
+          disease?: Json | null
+          doi?: string | null
+          gene?: Json | null
+          id?: number
+          ordo_code?: Json | null
+          puplication_database?: string | null
+          study_identifier?: string | null
+          study_title?: string | null
+          treatment?: Json | null
+          treatment_id?: Json | null
+          year_of_publication?: number | null
+        }
+        Update: {
+          authors?: string | null
+          created_at?: string | null
+          disease?: Json | null
+          doi?: string | null
+          gene?: Json | null
+          id?: number
+          ordo_code?: Json | null
+          puplication_database?: string | null
+          study_identifier?: string | null
+          study_title?: string | null
+          treatment?: Json | null
+          treatment_id?: Json | null
+          year_of_publication?: number | null
+        }
+        Relationships: []
+      }
       h2s: {
         Row: {
           id: number
