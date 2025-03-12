@@ -8,3 +8,6 @@ This project is built with .
 - shadcn-ui
 - Tailwind CSS
 
+### How to run the app ? 
+
+npm run dev
